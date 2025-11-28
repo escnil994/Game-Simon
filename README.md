@@ -7,8 +7,6 @@
 
 Una reimaginación moderna y progresiva del clásico juego de memoria "Simon Dice". Desarrollado con estándares web modernos, cuenta con una interfaz oscura "Dark Mode", efectos de neón, lógica orientada a objetos y capacidades PWA completas (instalable y offline).
 
-![Screenshot](https://via.placeholder.com/800x400?text=Captura+de+Pantalla+del+Juego)  
-*(Puedes reemplazar este link con una captura real de tu juego)*
 
 ---
 
