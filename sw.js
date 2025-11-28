@@ -1,52 +1,35 @@
-const VERSION = "v1";
+const CACHE_NAME = 'simon-dice-v2';
+const ASSETS = [
+    './',
+    './index.html',
+    './style.css',
+    './main.js',
+    './manifest.webmanifest',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+    'https://cdn.jsdelivr.net/npm/sweetalert2@11'
+];
 
-// Se llama cuando el navegador instale el sw
-self.addEventListener("install", event => {
-  // El precache recibe una lista de recursos que querramoes que mantenfa en cache
-  event.waitUntil(precache());
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    );
 });
 
-// Cada vez que ocurra  una pericion quiero que el sw haga algo
-self.addEventListener("fetch", event => {
-  // Extrar la peticion
-  const request = event.request;
-  // get solo traer los get
-  // si el metodo  del request no es un get no vamos hacer nada
-  // significa que el request va seguir en internet
-  if (request.method !== "GET") {
-    return;
-  }
-
-  // buscar en cache
-  event.respondWith(cachedResponse(request));
-
-  // actualizar el cache
-  event.waitUntil(updateCache(request));
+self.addEventListener('fetch', event => {
+    if (event.request.method !== 'GET') return;
+    
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => response || fetch(event.request))
+    );
 });
 
-//Nos da una instancia de un cache que le va pertenecer a la version uno y regresa una promesa
-async function precache() {
-  const cache = await caches.open(VERSION);
-
-  // Añadimos una lista de todos nuestros recursos del proyecto
-  return cache.addAll([
-    // Es muy importante ya que las paginas tambien las solicitamos como / debemos capturar esta request
-  ]);
-}
-
-// Buscando recursos en el cache
-async function cachedResponse(request) {
-  const cache = await caches.open(VERSION);
-  // Le preguntamos al cache, ya tienes una copia que le corresponde al request
-  // si no tiene nada va el request en internet
-  const response = await cache.match(request);
-  // Retorna el cache encontrado o va al request de internet
-  return response || fetch(request);
-}
-
-// Buscando una copia actualizada de todos los archivos de la aplicacion
-async function updateCache(request) {
-  const cache = await caches.open(VERSION);
-  const response = await fetch(request);
-  return cache.put(request, response);
-}
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(keys => Promise.all(
+            keys.map(key => {
+                if (key !== CACHE_NAME) return caches.delete(key);
+            })
+        ))
+    );
+});

@@ -1,21 +1,21 @@
 {
-  "background_color": "purple",
-  "description": "Un juego divertido con una secuencia de colores",
+  "name": "Simon Dice Pro",
+  "short_name": "SimonDice",
+  "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#ffa500",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "./images/android-chrome-192x192.png",
+      "src": "./images/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "./images/android-chrome-512x512.png",
+      "src": "./images/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "name": "Simon Dice",
-  "short_name": "SimonDice",
-  "start_url": "/SimonDice/index.html"
+  ]
 }

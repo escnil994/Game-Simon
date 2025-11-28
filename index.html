@@ -1,105 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Press+Start+2P|Roboto&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
-
-  <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-32x32.png">
-
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="images/favicon.ico" />
-
-  <script src="index.js" defer></script>
-  <link rel="manifest" href="manifest.webmanifest" />
-
-  <title>Juego de Nilson</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Dice | PWA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#1a1a2e">
 </head>
-
 <body>
-  <div class="container-btn-add">
-    <button type="button" class="btn btn-warning btn-sm">Instalar SimonDice</button>
-  </div>
 
-  <body onload="music('play')">
+    <button id="btn-install" class="btn-install" style="display: none;">
+        <i class="fas fa-download"></i> Instalar App
+    </button>
+
     <div class="wrapper">
-      <div class="title--container">
-        <h3>Game</h3>
-        <h4>Memory Game</h4>
-        <h5>By: @Escnil994</h5>
-      </div>
+        <header>
+            <h1>SIMON DICE</h1>
+            <div class="score-board">
+                <div class="score-item">Nivel: <span id="lbl-nivel">1</span></div>
+                <div class="score-item">
+                    Meta: 
+                    <select id="select-nivel" class="level-select">
+                        <option value="5">5 Niveles</option>
+                        <option value="10" selected>10 Niveles</option>
+                        <option value="15">15 Niveles</option>
+                        <option value="20">20 Niveles</option>
+                        <option value="999">Infinito</option>
+                    </select>
+                </div>
+                <div class="score-item">Jugador: <span id="lbl-nombre">...</span></div>
+            </div>
+        </header>
 
-      <h1 id="instrucciones" class="instrucciones">
-        <input class="help" type= "button" value= "¿Cómo Jugar?"></input>
-      </h1>
-      <div class="music">
-        <a href="#" id="control-music" onclick="controlAudio()">
-          <i class="fas fa-volume-up"></i>
-        </a>
-      </div>
-
-      <div class="container--grid">
-        <div class="container">
-          <div id="celeste" class="color celeste" data-color="celeste"></div>
-          <div id="violeta" class="color violeta" data-color="violeta"></div>
-          <div id="naranja" class="color naranja" data-color="naranja"></div>
-          <div id="verde" class="color verde" data-color="verde"></div>
-          <div class="circle"></div>
+        <div class="game-board">
+            <div id="celeste" class="color celeste" data-color="celeste"></div>
+            <div id="violeta" class="color violeta" data-color="violeta"></div>
+            <div id="naranja" class="color naranja" data-color="naranja"></div>
+            <div id="verde" class="color verde" data-color="verde"></div>
+            <button id="btn-empezar" class="btn-start">Jugar</button>
         </div>
-      </div>
-      <div class="options options--grid">
-        <div class="configuration">
-          <h1>Gamers y ajustes</h1>
-          <ul>
-            <li><strong>Nombre:</strong> <span id="name"></span></li>
-            <li><strong>Puntaje:</strong> <span id="pts">0</span> puntos</li>
-            <li><strong>Nivel:</strong> <span id="lvl">1</span></li>
-            <li><strong>Meta:</strong> <span id="meta"></span></li>
-            <li>
-              <!--   <strong>Secuencia repetidas: </strong> -->
-              <span id="sequence"></span>
-            </li>
-          </ul>
-          <div class="buttons">
-            <input class="btn " id="btn" type="button" value="Jugar"/>
-            <!--  <input class="btn btn--options" type="reset" value="Opciones" /> -->
-            <!--  <a class="btn btn--options" id="ret" type="Reset" href="index.html"
-              >Reset</a
-            > -->
 
-            <input class="btn btn--options" id="refres" type="button" value="Reset"
-              onclick="javascript:window.location.reload();" />
-          </div class ="result">
-          <h2>Resultados</h2>
+        <div class="controls">
+            <button id="btn-info" class="control-btn" title="Instrucciones"><i class="fas fa-info-circle"></i></button>
+            <button id="btn-reset" class="control-btn" title="Reiniciar"><i class="fas fa-redo"></i></button>
         </div>
-      </div>
     </div>
 
-    <audio volume="0.1" id="Juego-music" src="sounds/Bit-Quest.mp3" preload="auto" controls="none"
-      style="display: none;" loop></audio>
-    <audio volume="0.1" id="pointer-effect" src="sounds/pointer.wav" preload="auto" controls="none"
-      style="display: none;"></audio>
-    <audio volume="0.1" id="start-effect" src="sounds/start.ogg" preload="auto" controls="none"
-      style="display: none;"></audio>
-    <audio volume="0.1" id="lose-effect" src="sounds/lose.wav" preload="auto" controls="none"
-      style="display: none;"></audio>
-    <audio volume="0.1" id="win-effect" src="sounds/win.mp3" preload="auto" controls="none"
-      style="display: none;"></audio>
+    <audio id="sound-1" src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"></audio>
+    <audio id="sound-2" src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"></audio>
+    <audio id="sound-3" src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"></audio>
+    <audio id="sound-4" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></audio>
+    <audio id="sound-error" src="sounds/lose.wav"></audio>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script src="js/main.js"></script>
-  </body>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="main.js"></script>
+</body>
 </html>
